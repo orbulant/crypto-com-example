@@ -179,6 +179,10 @@ Clone this git repository and review the files (in no particular order):
 
 8. Implement more manual PostgreSQL queries for more raw performance instead of relying on Rails' built in ORM querying.
 
+9. Improve Tests by utilising an testing library like RSpec/Factory Girl/FactoryBot, and rewriting them to be more reusable.
+
+10. Using `faker` or some fake data generation tool to test trivial pieces of data like for e-mails and names.
+
 ### How long i spend on the test
 
 - Start Time: 21st April 2025 (Monday) 6.45PM
