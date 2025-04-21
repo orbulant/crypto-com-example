@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   end
 
   resources :users do
+      member do
+        post :show_balance
+        post :show_transactions
+      end
       resources :transactions, only: [] do
         collection do
           post :transfer_to
