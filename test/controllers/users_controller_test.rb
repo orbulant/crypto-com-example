@@ -15,9 +15,9 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create user" do
-    assert_difference(['User.count', 'Wallet.count']) do
+    assert_difference([ "User.count", "Wallet.count" ]) do
       post users_url, params: {
-        user: { email: 'test@example.com', name: 'Test User' }
+        user: { email: "test@example.com", name: "Test User" }
       }, as: :json
     end
 
@@ -31,20 +31,20 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     get user_url(@first_user), as: :json
     assert_response :success
     response_body = JSON.parse(@response.body)
-    assert_equal @first_user.email, response_body['email']
+    assert_equal @first_user.email, response_body["email"]
   end
 
   test "should update user" do
     patch user_url(@first_user), params: {
-      user: { name: 'Updated Name' }
+      user: { name: "Updated Name" }
     }, as: :json
     assert_response :success
     @first_user.reload
-    assert_equal 'Updated Name', @first_user.name
+    assert_equal "Updated Name", @first_user.name
   end
 
   test "should destroy user" do
-    assert_difference('User.count', -1) do
+    assert_difference("User.count", -1) do
       delete user_url(@first_user), as: :json
     end
     assert_response :no_content
@@ -54,7 +54,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     post show_balance_user_url(@first_user), as: :json
     assert_response :success
     response_data = JSON.parse(@response.body)
-    assert_equal @first_wallet.balance.to_f, response_data['balance'].to_f
+    assert_equal @first_wallet.balance.to_f, response_data["balance"].to_f
   end
 
   test "should show transactions" do

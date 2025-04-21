@@ -26,10 +26,10 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
     }, as: :json
 
     assert_response :created
-    
+
     @first_wallet.reload
     @second_wallet.reload
-    
+
     assert_equal initial_sender_balance - transfer_amount, @first_wallet.balance
     assert_equal initial_receiver_balance + transfer_amount, @second_wallet.balance
   end
