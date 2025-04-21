@@ -68,7 +68,15 @@ rails test test/controllers/users_controller_test.rb -n test_should_show_balance
 
 ## API Endpoints
 
+You may also use this Postman collection to test things out.
+
 Visit [Postman Collection](https://.postman.co/workspace/My-Workspace~ec23273d-039e-475e-8cbd-bce8ca3c806d/collection/29074311-4fbf8ad8-a0e8-422c-970c-a4ca5ce36af7?action=share&creator=29074311&active-environment=29074311-ee688226-0aba-4ecc-935f-226e5bb3f71d)
+
+If the collection is not accessible. There is a file in this repository where you may import into your Postman to begin.
+
+The collection file here in this repository contains the necesssary enviroment variables to start making requests.
+
+Begin by creating your user first and then every other API route would work.
 
 ### Users
 
@@ -102,7 +110,7 @@ curl -X POST http://localhost:3000/users \
 ### Deposit Money
 
 ```bash
-curl -X POST http://localhost:3000/wallets/1/deposit \
+curl -X POST http://localhost:3000/wallets/INSERT_WALLET_ID_HERE/deposit \
   -H "Content-Type: application/json" \
   -d '{"wallet": {"amount": 100.0}}'
 ```
@@ -110,9 +118,9 @@ curl -X POST http://localhost:3000/wallets/1/deposit \
 ### Transfer Money
 
 ```bash
-curl -X POST http://localhost:3000/users/2/transactions/transfer_to \
+curl -X POST http://localhost:3000/users/INSERT_THE_RECEIVING_USER_ID_HERE/transactions/transfer_to \
   -H "Content-Type: application/json" \
-  -d '{"transaction": {"amount": 50.0, "sender_id": 1}}'
+  -d '{"transaction": {"amount": 50.0, "sender_id": "INSERT_THE_SENDING_USER_ID_HERE"}}'
 ```
 
 ## Development

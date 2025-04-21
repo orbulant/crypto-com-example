@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "4fbf8ad8-a0e8-422c-970c-a4ca5ce36af7",
+		"name": "shingsCryptoComExample",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29074311"
+	},
+	"item": [
+		{
+			"name": "health",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/up.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"up.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": {\n        \"email\": \"test@hello.com\",\n        \"name\": \"My First User\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users.json"
+					]
+				},
+				"description": "### POST /users.json\n\nThis endpoint is used to create a new user.\n\n#### Request\n\n- Method: POST\n    \n- Base URL: {{base_url}}\n    \n- Headers:\n    \n    - Content-Type: application/json\n        \n- Body:\n    \n    - user (object)\n        \n        - email (string): The email of the user.\n            \n        - name (string): The name of the user.\n            \n\n#### Response\n\n- Status: 422\n    \n- Content-Type: application/json\n    \n- Body:\n    \n    - email (array): An array containing error messages related to the email field.\n        \n\n#### Response JSON Schema\n\n``` json\n{\n    \"type\": \"object\",\n    \"properties\": {\n        \"email\": {\n            \"type\": \"array\"\n        }\n    }\n}\n\n ```"
+			},
+			"response": []
+		},
+		{
+			"name": "Create New User 2nd",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user\": {\n        \"email\": \"another@hello.com\",\n        \"name\": \"My Second User\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show user",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id}}.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id}}.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show user balance",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id}}/show_balance.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}",
+						"show_balance.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show user transaction history",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id}}/show_transactions.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}",
+						"show_transactions.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit to wallet",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wallet\": {\n        \"amount\": 1000.0\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wallets/{{wallet_id_second}}/deposit.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wallets",
+						"{{wallet_id_second}}",
+						"deposit.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Withdraw from wallet",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wallet\": {\n        \"amount\": 1000.0\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wallets/{{wallet_id}}/withdraw.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wallets",
+						"{{wallet_id}}",
+						"withdraw.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer To User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"transaction\": {\n        \"sender_id\": \"{{user_id_second}}\",\n        \"amount\": 100.0\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id}}/transactions/transfer_to.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}",
+						"transactions",
+						"transfer_to.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Destroy Everything and Start Over",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/destroy_everything.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"destroy_everything.json"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
