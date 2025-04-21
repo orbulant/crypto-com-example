@@ -1,5 +1,5 @@
 class WalletsController < ApplicationController
-  before_action :set_wallet, only: %i[ deposit ]
+  before_action :set_wallet, only: %i[ deposit withdraw ]
 
   # POST /wallets/:id/deposit
   def deposit

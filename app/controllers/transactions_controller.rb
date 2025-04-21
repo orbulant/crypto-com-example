@@ -30,6 +30,10 @@ class TransactionsController < ApplicationController
       @user = User.find(params[:user_id])
       @sender = User.find(transaction_params[:sender_id])
 
+      if @user.id == @sender.id
+        render json: { error: "Sender and receiver cannot be the same" }, status: :unprocessable_entity and return
+      end
+
       @wallet = @user.wallet
       @transaction = @wallet.transactions.new(
         amount: transaction_params[:amount],

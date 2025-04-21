@@ -10,7 +10,7 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
+    render json: @user.as_json
   end
 
   # POST /users
@@ -42,6 +42,30 @@ class UsersController < ApplicationController
     @user.destroy!
   end
 
+  # POST /users/:id/show_balance
+  def show_balance
+    @user = User.find(params[:id])
+    @wallet = @user.wallet
+
+    if @wallet
+      render json: { balance: @wallet.balance }
+    else
+      render json: { error: "Wallet not found" }, status: :not_found
+    end
+  end
+
+  # POST /users/:id/show_transactions
+  def show_transactions
+    @user = User.find(params[:id])
+    @transactions = @user.wallet.transactions
+
+    if @transactions
+      render json: @transactions
+    else
+      render json: { error: "No transactions found" }, status: :not_found
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
@@ -50,6 +74,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:email, :is_vendor)
+      params.require(:user).permit(:email, :name)
     end
 end
