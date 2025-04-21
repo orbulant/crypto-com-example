@@ -187,7 +187,7 @@ Clone this git repository and review the files (in no particular order):
 
 - Start Time: 21st April 2025 (Monday) 6.45PM
 - End Time: Time e-mail response sent.
-- Actual time on development excluding rest/breaks/distractions/main-work: 5.5 hours.
+- Actual time on development excluding rest/breaks/distractions/day job: 5.5 hours.
 - Time spent on README: 1 hour.
 
 ### Features chose not to be included
