@@ -1,4 +1,10 @@
 Rails.application.routes.draw do
+  resources :wallets, only: [] do
+    member do
+      post :deposit
+      post :withdraw
+    end
+  end
 
   resources :users do
       resources :transactions, only: [] do

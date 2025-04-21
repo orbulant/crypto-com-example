@@ -18,14 +18,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      @wallet = if @user[:is_vendor]
-                  @user.create_wallet!(name: "Default Wallet", balance: 999999.0)
-                else
-                  @user.create_wallet!(name: "Default Wallet", balance: 0.0)
-                end
-    
+      @wallet = @user.create_wallet!(name: "Default Wallet", balance: 0.0)
 
-      render json: @wallet.erros, status: :unprocessable_entity and return unless @wallet
+      render json: @wallet.errors, status: :unprocessable_entity and return unless @wallet
 
       render json: @user, status: :created, location: @user
     else

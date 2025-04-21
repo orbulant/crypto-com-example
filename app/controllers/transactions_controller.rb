@@ -29,20 +29,20 @@ class TransactionsController < ApplicationController
     ActiveRecord::Base.transaction do
       @user = User.find(params[:user_id])
       @sender = User.find(transaction_params[:sender_id])
-      
+
       @wallet = @user.wallet
       @transaction = @wallet.transactions.new(
         amount: transaction_params[:amount],
         user_id: @sender.id
       )
-  
+
       # Update sender's wallet balance
       @sender.wallet.with_lock do
         new_balance = @sender.wallet.balance - transaction_params[:amount].to_f
         raise ActiveRecord::RecordInvalid if new_balance < 0
         @sender.wallet.update!(balance: new_balance)
       end
-  
+
       if @transaction.save
         # Update sender's wallet balance
         @wallet.with_lock do # Prevent a race condition here when updating the wallet balance
@@ -53,11 +53,11 @@ class TransactionsController < ApplicationController
         raise ActiveRecord::Rollback
       end
     end
-  
+
   rescue ActiveRecord::RecordInvalid
-    render json: { error: 'Insufficient funds' }, status: :unprocessable_entity
+    render json: { error: "Insufficient funds" }, status: :unprocessable_entity
   rescue ActiveRecord::RecordNotFound
-    render json: { error: 'User or sender not found' }, status: :not_found
+    render json: { error: "User or sender not found" }, status: :not_found
   end
 
   private
