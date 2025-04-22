@@ -47,7 +47,9 @@ class TransactionsController < ApplicationController
         # Set a new temporary balance
         new_balance = @sender.wallet.balance - transaction_params[:amount].to_f
         # Check if sender has sufficient balance
-        raise ActiveRecord::RecordInvalid.new(@sender.wallet) if new_balance < 0
+        if new_balance < 0
+          render json: { error: "Insufficient funds" }, status: :unprocessable_entity and return
+        end
         # Update sender's wallet balance
         @sender.wallet.update!(balance: new_balance)
       end

@@ -37,7 +37,7 @@ class TransactionsControllerTest < ActionDispatch::IntegrationTest
   test "should not transfer with insufficient funds" do
     post transfer_to_user_transactions_url(@second_user), params: {
       transaction: {
-        amount: 1000.0,
+        amount: 100.0, # Make sure this is more than the balance in the user's wallet
         sender_id: @first_user.id
       }
     }, as: :json

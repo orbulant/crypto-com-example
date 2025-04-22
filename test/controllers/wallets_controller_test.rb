@@ -39,7 +39,7 @@ class WalletsControllerTest < ActionDispatch::IntegrationTest
 
   test "should not withdraw more than balance" do
     post withdraw_wallet_url(@first_wallet), params: {
-      wallet: { amount: 1000.0 }
+      wallet: { amount: 100.0 } # Make sure this is more than the balance in the user's wallet
     }, as: :json
 
     assert_response :unprocessable_entity
