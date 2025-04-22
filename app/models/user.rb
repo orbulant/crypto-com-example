@@ -4,7 +4,6 @@ class User < ApplicationRecord
   before_save :downcase_email
 
   has_one :wallet, dependent: :destroy
-  has_many :transactions, through: :wallet
 
   def as_json(options = {})
     super(options.merge(include: :wallet)) # This shouldn't be here, i included it in so that we can easily get the wallet details
