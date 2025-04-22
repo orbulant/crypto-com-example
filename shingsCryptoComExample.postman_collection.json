@@ -94,7 +94,69 @@
 			"response": []
 		},
 		{
-			"name": "Show user",
+			"name": "Deposit to wallet of New User",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wallet\": {\n        \"amount\": 1000.0\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wallets/{{wallet_id}}/deposit.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wallets",
+						"{{wallet_id}}",
+						"deposit.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposit to wallet of New User 2nd",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"wallet\": {\n        \"amount\": 1000.0\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/wallets/{{wallet_id_second}}/deposit.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"wallets",
+						"{{wallet_id_second}}",
+						"deposit.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show New User user",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -115,7 +177,7 @@
 			"response": []
 		},
 		{
-			"name": "Delete User",
+			"name": "Delete New User",
 			"event": [
 				{
 					"listen": "test",
@@ -148,12 +210,12 @@
 			"response": []
 		},
 		{
-			"name": "Show user balance",
+			"name": "Show New User user balance",
 			"request": {
 				"auth": {
 					"type": "noauth"
 				},
-				"method": "POST",
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "{{base_url}}/users/{{user_id}}/show_balance.json",
@@ -170,9 +232,31 @@
 			"response": []
 		},
 		{
-			"name": "Show user transaction history",
+			"name": "Show New User 2nd user balance",
 			"request": {
-				"method": "POST",
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id}}/show_balance.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id}}",
+						"show_balance.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Show New User user transaction history",
+			"request": {
+				"method": "GET",
 				"header": [],
 				"url": {
 					"raw": "{{base_url}}/users/{{user_id}}/show_transactions.json",
@@ -189,31 +273,19 @@
 			"response": []
 		},
 		{
-			"name": "Deposit to wallet",
+			"name": "Show New User 2nd user transaction history Copy",
 			"request": {
-				"auth": {
-					"type": "noauth"
-				},
-				"method": "POST",
+				"method": "GET",
 				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"wallet\": {\n        \"amount\": 1000.0\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "{{base_url}}/wallets/{{wallet_id_second}}/deposit.json",
+					"raw": "{{base_url}}/users/{{user_id_second}}/show_transactions.json",
 					"host": [
 						"{{base_url}}"
 					],
 					"path": [
-						"wallets",
-						"{{wallet_id_second}}",
-						"deposit.json"
+						"users",
+						"{{user_id_second}}",
+						"show_transactions.json"
 					]
 				}
 			},
@@ -251,7 +323,7 @@
 			"response": []
 		},
 		{
-			"name": "Transfer To User",
+			"name": "Transfer from New User 2nd to New User",
 			"request": {
 				"auth": {
 					"type": "noauth"
@@ -275,6 +347,38 @@
 					"path": [
 						"users",
 						"{{user_id}}",
+						"transactions",
+						"transfer_to.json"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Transfer from New User to New User 2nd",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"transaction\": {\n        \"sender_id\": \"{{user_id}}\",\n        \"amount\": 100.0\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users/{{user_id_second}}/transactions/transfer_to.json",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users",
+						"{{user_id_second}}",
 						"transactions",
 						"transfer_to.json"
 					]
