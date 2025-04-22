@@ -1,9 +1,11 @@
 class WalletsController < ApplicationController
+  include BaseErrorHandling
+
   before_action :set_wallet, only: %i[ deposit withdraw ]
 
   # POST /wallets/:id/deposit
   def deposit
-    ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction do # Use transaction here to ensure atomicity to ensure that all operations succeed or none of them happen (rollback)
       @wallet.with_lock do
         new_balance = @wallet.balance + wallet_params[:amount].to_f
         if @wallet.update(balance: new_balance)
@@ -13,13 +15,11 @@ class WalletsController < ApplicationController
         end
       end
     end
-  rescue ActiveRecord::RecordInvalid
-    render json: { error: "Invalid transaction" }, status: :unprocessable_entity
   end
 
   # POST /wallets/:id/withdraw
   def withdraw
-    ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction do # Use transaction here to ensure atomicity to ensure that all operations succeed or none of them happen (rollback)
       @wallet.with_lock do
         new_balance = @wallet.balance - wallet_params[:amount].to_f
 
@@ -35,8 +35,6 @@ class WalletsController < ApplicationController
         end
       end
     end
-  rescue ActiveRecord::RecordInvalid
-    render json: { error: "Invalid transaction" }, status: :unprocessable_entity
   end
 
   private

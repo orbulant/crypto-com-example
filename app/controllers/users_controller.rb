@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include BaseErrorHandling
+
   before_action :set_user, only: %i[ show update destroy ]
 
   # GET /users
@@ -18,11 +20,13 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      @wallet = @user.create_wallet!(name: "Default Wallet", balance: 0.0)
+      @wallet = @user.create_wallet(name: "Default Wallet", balance: 0.0)
 
-      render json: @wallet.errors, status: :unprocessable_entity and return unless @wallet
-
-      render json: @user, status: :created, location: @user
+      if @wallet.persisted?
+        render json: @user, status: :created, location: @user
+      else
+        render json: @wallet.errors, status: :unprocessable_entity and return
+      end
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -67,13 +71,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:email, :name)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:email, :name)
+  end
 end

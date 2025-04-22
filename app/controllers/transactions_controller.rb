@@ -1,4 +1,6 @@
 class TransactionsController < ApplicationController
+  include BaseErrorHandling
+
   before_action :set_transaction, only: %i[ show ]
 
   # GET /transactions
@@ -26,7 +28,7 @@ class TransactionsController < ApplicationController
 
   # POST /users/:user_id/transactions/deposit
   def transfer_to
-    ActiveRecord::Base.transaction do
+    ActiveRecord::Base.transaction do # Use transaction here to ensure atomicity to ensure that all operations succeed or non of them happen (rollback)
       @user = User.find(params[:user_id])
       @sender = User.find(transaction_params[:sender_id])
 
@@ -41,27 +43,25 @@ class TransactionsController < ApplicationController
       )
 
       # Update sender's wallet balance
-      @sender.wallet.with_lock do
+      @sender.wallet.with_lock do # Use lock to prevent race conditions
+        # Set a new temporary balance
         new_balance = @sender.wallet.balance - transaction_params[:amount].to_f
-        raise ActiveRecord::RecordInvalid if new_balance < 0
+        # Check if sender has sufficient balance
+        raise ActiveRecord::RecordInvalid.new(@sender.wallet) if new_balance < 0
+        # Update sender's wallet balance
         @sender.wallet.update!(balance: new_balance)
       end
 
       if @transaction.save
-        # Update sender's wallet balance
-        @wallet.with_lock do # Prevent a race condition here when updating the wallet balance
+        # Update receiver's wallet balance
+        @wallet.with_lock do # Use a lock here to prevent race conditions
           @wallet.update!(balance: @wallet.balance + transaction_params[:amount].to_f)
         end
         render json: @transaction, status: :created
       else
-        raise ActiveRecord::Rollback
+        raise ActiveRecord::Rollback # Rollback the transaction if saving fails
       end
     end
-
-  rescue ActiveRecord::RecordInvalid
-    render json: { error: "Insufficient funds" }, status: :unprocessable_entity
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "User or sender not found" }, status: :not_found
   end
 
   private
