@@ -82,7 +82,7 @@ rails test test/controllers/users_controller_test.rb -n test_should_show_balance
 
 ## API Endpoints
 
-Visit [Postman Collection](https://.postman.co/workspace/My-Workspace~ec23273d-039e-475e-8cbd-bce8ca3c806d/collection/29074311-4fbf8ad8-a0e8-422c-970c-a4ca5ce36af7?action=share&creator=29074311&active-environment=29074311-ee688226-0aba-4ecc-935f-226e5bb3f71d) to have the routes to test the API.
+Visit [Postman Collection](https://postman.co/workspace/My-Workspace~ec23273d-039e-475e-8cbd-bce8ca3c806d/collection/29074311-4fbf8ad8-a0e8-422c-970c-a4ca5ce36af7?action=share&creator=29074311&active-environment=29074311-ee688226-0aba-4ecc-935f-226e5bb3f71d) to have the routes to test the API.
 
 If the collection is not accessible. **There is a file in this repository where you may import into your Postman to begin.**
 
