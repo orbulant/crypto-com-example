@@ -51,15 +51,38 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show balance" do
-    post show_balance_user_url(@first_user), as: :json
+    get show_balance_user_url(@first_user), as: :json
     assert_response :success
     response_data = JSON.parse(@response.body)
     assert_equal @first_wallet.balance.to_f, response_data["balance"].to_f
   end
 
   test "should show transactions" do
-    post show_transactions_user_url(@first_user), as: :json
+    get show_transactions_user_url(@first_user), as: :json
     assert_response :success
-    assert_kind_of Array, JSON.parse(@response.body)
+
+    response_data = JSON.parse(@response.body)
+    # Check structure
+    assert_includes response_data.keys, "incoming"
+    assert_includes response_data.keys, "outgoing"
+    assert_includes response_data.keys, "total_incoming"
+    assert_includes response_data.keys, "total_outgoing"
+
+    # Check types
+    assert_kind_of Array, response_data["incoming"]
+    assert_kind_of Array, response_data["outgoing"]
+    assert_kind_of Integer, response_data["total_incoming"]
+    assert_kind_of Integer, response_data["total_outgoing"]
+
+    # If you want to check transaction structure when present
+    if response_data["incoming"].any?
+      transaction = response_data["incoming"].first
+      assert_includes transaction.keys, "id"
+      assert_includes transaction.keys, "user_id"
+      assert_includes transaction.keys, "wallet_id"
+      assert_includes transaction.keys, "amount"
+      assert_includes transaction.keys, "created_at"
+      assert_includes transaction.keys, "updated_at"
+    end
   end
 end

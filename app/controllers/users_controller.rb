@@ -58,13 +58,15 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST /users/:id/show_transactions
+  # GET /users/:id/show_transactions
   def show_transactions
     @user = User.find(params[:id])
     @transactions = @user.wallet.transactions
 
     if @transactions
-      render json: @transactions
+      # Shows all the incoming, outgoing transactions
+      # @user.transactions is used to get all the outbound transactions made while @user.wallet.transactions is to get all the transactions made IN TO the wallet
+      render json: { incoming: @transactions, total_incoming: @transactions.count, outgoing: @user.transactions, total_outgoing: @user.transactions.count }
     else
       render json: { error: "No transactions found" }, status: :not_found
     end

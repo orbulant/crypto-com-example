@@ -1,37 +1,13 @@
 class TransactionsController < ApplicationController
   include BaseErrorHandling
 
-  before_action :set_transaction, only: %i[ show ]
-
-  # GET /transactions
-  def index
-    @transactions = Transaction.all
-
-    render json: @transactions
-  end
-
-  # GET /transactions/1
-  def show
-    render json: @transaction
-  end
-
-  # POST /transactions
-  def create
-    @transaction = Transaction.new(transaction_params)
-
-    if @transaction.save
-      render json: @transaction, status: :created, location: @transaction
-    else
-      render json: @transaction.errors, status: :unprocessable_entity
-    end
-  end
-
   # POST /users/:user_id/transactions/deposit
   def transfer_to
     ActiveRecord::Base.transaction do # Use transaction here to ensure atomicity to ensure that all operations succeed or non of them happen (rollback)
       @user = User.find(params[:user_id])
       @sender = User.find(transaction_params[:sender_id])
 
+      # Self explanatory check here
       if @user.id == @sender.id
         render json: { error: "Sender and receiver cannot be the same" }, status: :unprocessable_entity and return
       end
@@ -67,11 +43,6 @@ class TransactionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_transaction
-      @transaction = Transaction.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def transaction_params
       params.require(:transaction).permit(:sender_id, :receiver_id, :amount)

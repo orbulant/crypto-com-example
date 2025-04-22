@@ -8,8 +8,8 @@ Rails.application.routes.draw do
 
   resources :users do
       member do
-        post :show_balance
-        post :show_transactions
+        get :show_balance
+        get :show_transactions
       end
       resources :transactions, only: [] do
         collection do
